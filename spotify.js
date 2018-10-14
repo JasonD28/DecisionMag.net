@@ -10,7 +10,7 @@ const clientID = "52adb50940ad424ea21b1f0f83216db5",
 
 function getSpotifyID(type, name) {
     let id = '';
-    
+
     if(type == "genre"){
         getRecommendation(`seed_${type}s`, name);
     } else {
@@ -49,7 +49,7 @@ function getRecommendation(seedType, seedID){
 
             document.getElementById('album').setAttribute('src', response.tracks[rng].album.images[0].url);
             document.getElementById('artistName').innerHTML = response.tracks[rng].album.artists[0].name;
-            document.getElementById('title').innerHTML = response.tracks[rng].album.name;
+            document.getElementById('albumTitle').innerHTML = response.tracks[rng].album.name;
             document.getElementById('musicLink').setAttribute('href', response.tracks[rng].album.external_urls.spotify);
         }
     }).catch(error => console.error('Error:', error));
