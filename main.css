@@ -1,0 +1,17 @@
+body{
+    text-align: center;
+    margin: auto;
+}
+h1{
+    font-size: 6rem;
+    /* background-color: aqua; */
+}
+select{
+}
+p{
+}
+#option1,
+#option1_1,
+#option2{
+    display: none;
+}
