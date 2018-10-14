@@ -53,7 +53,7 @@ function getRecommendation(seedType, seedID){
         if(response.tracks){
             console.log(response.tracks);
             let rng = Math.floor(Math.random() * 50);
-            console.log(response.tracks[rng].album.external_urls.spotify);
+            return response.tracks[rng].album.external_urls.spotify;
         }
     }).catch(error => console.error('Error:', error));
 }
@@ -78,9 +78,6 @@ function getRecommendation(seedType, seedID){
 
 // getAccessToken();
 
-
-getSpotifyID('artist', 'IU');
-
 document.addEventListener('DOMContentLoaded', function() {
 
     document.getElementById('selections').addEventListener('change', function(){
@@ -100,9 +97,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.getElementById('formy').addEventListener('submit', function(){
                     let name = document.getElementById('musicName').value;
 
-                    document.getElementById('musicName').value = '';
+                    // document.getElementById('musicName').value = '';
 
-                    alert(type + ': '+ name);
+                    document.getElementById('option1_1').style.display = "none";
+                    let recommend = getSpotifyID(title, name);
+
+                    alert(recommend);
                 });
             })
         }
