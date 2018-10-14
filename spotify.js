@@ -6,13 +6,13 @@ const clientID = "52adb50940ad424ea21b1f0f83216db5",
     apiURL = "https://accounts.spotify.com/api/token/",
     searchURL = "https://api.spotify.com/v1/search?",
     recURL = 'https://api.spotify.com/v1/recommendations?',
-    TOKEN = "BQAmJK5r1tAMf5PYbfGGAoruCMTywjM2XX8aaX65KITxXgAWf0DxBg8fLGIdxOXhzDVl9XfPLA7aYbhn53evINqtU2AYXkzDo-U905OAyUnhPs0X25hf7P2lZ-xCwfmAu7kVm-zy5FeOJ6a9emBM";
+    TOKEN = 'BQD7my4HzPXYbaj6kCLPxaT4Qgfexk1k0oTTAV_WnvXmWwmdxtanRVFSIMc8SWXOR3wF7l6wN4waSgBVhhyIMexfnf-oFHSDrukxUTrNg6lKqOIt1WADSUFWhnowE9PCT7pcuo9SEIrmCD01LFg2';
 
 function getSpotifyID(type, name) {
     let id = '';
-    alert(`${type}:${name}`);
+    
     if(type == "genre"){
-        getRecommendation(type, name);
+        getRecommendation(`seed_${type}s`, name);
     } else {
         fetch(`${searchURL}q=${name}&type=${type}&limit=1`, {
             method: 'GET',
@@ -22,14 +22,12 @@ function getSpotifyID(type, name) {
             }
         }).then(response => response.json()).then(function (response) {
             if(response.artists.items[0].id){
-                alert(type);
                 id = response.artists.items[0].id;
-                getRecommendation(type, id);
+                getRecommendation(`seed_${type}s`, id);
             } else {
-                alert("Bye Irene");
                 console.error("Nothing found.")
             }
-        }).catch(error => alert(error));
+        }).catch(error => console.error('Error:', error));
     }
 
     
@@ -37,81 +35,62 @@ function getSpotifyID(type, name) {
 }
 
 function getRecommendation(seedType, seedID){
-
-    let seed = '';
-
-    if(seedType == 'artist'){
-        alert("Irene is nice at times...")
-        seed = 'seed_artists';
-    }
-    
-
     console.log(seedID);
-    fetch(`${recURL}limit=50&${seed}=${seedID}`, {
+    fetch(`${recURL}limit=50&${seedType}=${seedID}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${TOKEN}`
         }
     }).then(response => response.json()).then(function (response) {
-        if(response.tracks){
-            alert('Bread');
+        if(response.tracks[49]){
+            console.log(response);
             let rng = Math.floor(Math.random() * 50);
-            let teamLiquid = response.tracks[rng].album.external_urls.spotify;
+
+            document.getElementById('album').setAttribute('src', response.tracks[rng].album.images[0].url);
+            document.getElementById('artistName').innerHTML = response.tracks[rng].album.artists[0].name;
+            document.getElementById('title').innerHTML = response.tracks[rng].album.name;
+            document.getElementById('musicLink').setAttribute('href', response.tracks[rng].album.external_urls.spotify);
         }
     }).catch(error => console.error('Error:', error));
 }
 
-// function getAccessToken(){
-//     let param = 'grant_type=client_credentials';
+let type, name;
 
-//     fetch(apiURL, {
-//         method: 'POST',
-//         headers: {
-//             'Content-Type': 'application/x-www-form-urlencoded',
-//             'Authorization': 'Basic ' + btoa(`${clientID}:${clientSecret}`),
-//             'Content-Length': param.length,
-
-
-//         },
-//         body: param
-//     }).then(response => response.json()).then(function (response) {
-//         console.log(response);
-//     }).catch(error => console.error('Error:', error));
-// }
-
-// getAccessToken();
-
-// getSpotifyID('artist', 'IU');
-
-document.addEventListener('DOMContentLoaded', function() {
+// document.addEventListener('DOMContentLoaded', function() {
 
     document.getElementById('selections').addEventListener('change', function(){
+        
 
         if(document.getElementById('selections').value == 'Music'){
 
             document.getElementById('option1').style.display = "block";
             document.getElementById('options').style.display = "none";
-
-            document.getElementById('musicSelec').addEventListener('change', function(){
-                let type = document.getElementById('musicSelec').value;
-
-                document.getElementById('option1').style.display = "none";
-                document.getElementById('option1_1').style.display = "block";
-                document.getElementById("selector").innerHTML = `Enter the name of a(n) ${type} you like`;
-
-                document.getElementById('formy').addEventListener('submit', function(){
-                    let name = document.getElementById('musicName').value;
-
-                    // document.getElementById('musicName').value = '';
-
-                    // document.getElementById('option1_1').style.display = "none";
-                    // document.getElementById('options').style.display = "none";
-                    getSpotifyID(type, name);
-
-                    // alert(recommend);
-                });
-            })
         }
     });
-});
+
+    document.getElementById('musicSelec').addEventListener('change', function(){
+        type = document.getElementById('musicSelec').value;
+
+        document.getElementById('option1').style.display = "none";
+        document.getElementById('option1_1').style.display = "block";
+        document.getElementById("selector").innerHTML = `Enter the name of a(n) ${type} you like`;
+    });
+
+    document.getElementById("musicButton").addEventListener('mouseup', function(){
+        if(document.getElementById('musicName').value){
+            getSpotifyID(type, document.getElementById('musicName').value);
+
+            document.getElementById('option1_1').style.display = "none";
+            document.getElementById('finalMusic').style.display = "block";
+        }
+    });
+
+    document.getElementById('musicName').addEventListener("keyup", function(event) {
+        if (event.keyCode === 13 && document.getElementById('musicName').value) {
+            getSpotifyID(type, document.getElementById('musicName').value);
+
+            document.getElementById('option1_1').style.display = "none";
+            document.getElementById('finalMusic').style.display = "block";
+        }
+      });

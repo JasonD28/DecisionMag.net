@@ -1,10 +1,10 @@
 <!doctype html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Page Title</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- <meta charset="utf-8" /> -->
+    <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge"> -->
+    <title>Decision Magnet</title>
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
     <title>Page Title</title>
 </head>
 <body>
@@ -22,20 +22,20 @@
         <p>Choose one</p>
         <select id="musicSelec">
             <option>Select One</option>
-            <option value="Album">Album</option>
-            <option value="Artist">Artist</option>
-            <option value="Genre">Genre</option>
-            <option value="Song">Song</option>
+            <option value="artist">Artist</option>
+            <option value="genre">Genre</option>
         </select>
     </div>
     <div id="option1_1">
         <p id="selector"></p>
-        <form id="formy">
-            <input id="musicName" type="text">
-            <button id = "musicButton" type="submit">Submit</button>
-        </form>
+        <input id="musicName" type="text">
+        <button id = "musicButton">Submit</button>
     </div>
-    <div id="option2">
+    <div id='finalMusic'>
+        <img id='album'>
+        <h2 id="artistName"></h2>
+        <h3 id='title'></h3>
+        <a id="musicLink"><button>Click To Listen</button></a>
 
     </div>
     <script src="spotify.js"></script>
