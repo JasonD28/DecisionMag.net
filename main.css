@@ -3,15 +3,21 @@ body{
     margin: auto;
 }
 h1{
-    font-size: 6rem;
-    /* background-color: aqua; */
+    font-size: 5rem;
+
 }
-select{
+h2{
+    font-size: 2rem;
+    font-weight: 100;
 }
-p{
+img{
+    max-height: 50vh;
+    max-width: 50vh;
 }
 #option1,
 #option1_1,
-#option2{
+#option2,
+#finalMusic,
+#info{
     display: none;
 }

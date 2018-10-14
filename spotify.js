@@ -6,7 +6,9 @@ const clientID = "52adb50940ad424ea21b1f0f83216db5",
     apiURL = "https://accounts.spotify.com/api/token/",
     searchURL = "https://api.spotify.com/v1/search?",
     recURL = 'https://api.spotify.com/v1/recommendations?',
-    TOKEN = 'BQA51eEeQz7cLmFWJ1ZKR-NOSWDw1imEsrjQfoLLeJMeUePgp4Zi2Dl--ElwFRHZRcN9naKQ1nSFlZG9zZPh22y2Xe-FvibOXfcXVGgh_lGXgGBmzw945s1C9m8YXJe7RhItP6FmWdmw33jYqMwo';
+
+    TOKEN = 'BQC3pT5pL7tu-eTEct_9TWMe2dkmI7I9FObTEVGZg735yTw1e3a8b6tgAJB-bj_HLqJGb1KtdA3wb3l3G0varF6QnWfRRNjvttkB0OfxSeECFaZcSG82gpwyfIvkCS6R1nozmlbczP0hzfgXK9iL';
+
 
 function getSpotifyID(type, name) {
     let id = '';
@@ -38,15 +40,6 @@ function getSpotifyID(type, name) {
 
 function getRecommendation(seedType, seedID){
 
-    let seed = '';
-
-    if(seedType == 'artist'){
-        alert("Irene is nice at times...")
-        seed = 'seed_artists';
-    }
-
-    alert(`${seedType}: ${seedID}`);
-
     console.log(seedID);
     fetch(`${recURL}limit=50&${seedType}=${seedID}`, {
         method: 'GET',
@@ -58,7 +51,12 @@ function getRecommendation(seedType, seedID){
         if(response.tracks[49]){
             console.log(response);
             let rng = Math.floor(Math.random() * 50);
-            alert(response.tracks[rng].album.external_urls.spotify);
+
+            document.getElementById('album').setAttribute('src', response.tracks[rng].album.images[0].url);
+            document.getElementById('artistName').innerHTML = response.tracks[rng].album.artists[0].name;
+            document.getElementById('albumTitle').innerHTML = response.tracks[rng].album.name;
+            document.getElementById('musicLink').setAttribute('href', response.tracks[rng].album.external_urls.spotify);
+
         }
     }).catch(error => alert(error + 'REC'));//console.error('Error:', error));
 }
@@ -88,11 +86,18 @@ let type, name;
     document.getElementById("musicButton").addEventListener('mouseup', function(){
         if(document.getElementById('musicName').value){
             getSpotifyID(type, document.getElementById('musicName').value);
+
+            document.getElementById('option1_1').style.display = "none";
+            document.getElementById('finalMusic').style.display = "block";
         }
     });
 
     document.getElementById('musicName').addEventListener("keyup", function(event) {
         if (event.keyCode === 13 && document.getElementById('musicName').value) {
             getSpotifyID(type, document.getElementById('musicName').value);
+
+            document.getElementById('option1_1').style.display = "none";
+            document.getElementById('finalMusic').style.display = "block";
+
         }
       });
