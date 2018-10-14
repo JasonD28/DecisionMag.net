@@ -4,7 +4,10 @@ function getSite(id) {
     }).then(reply => reply.json()).then(function(reply){
         // console.log(reply);
         // return reply.homepage;
-        document.getElementById("website").innerHTML = reply.homepage;
+	if ( reply.homepage != null )
+	{
+        	document.getElementById("website").innerHTML = reply.homepage;
+	}
     }).catch(error => console.error('Error: ', error));
 
 }
