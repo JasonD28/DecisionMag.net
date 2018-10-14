@@ -6,7 +6,7 @@ const clientID = "52adb50940ad424ea21b1f0f83216db5",
     apiURL = "https://accounts.spotify.com/api/token/",
     searchURL = "https://api.spotify.com/v1/search?",
     recURL = 'https://api.spotify.com/v1/recommendations?',
-    TOKEN = 'BQC9jrLpu-u_TrbpCT8WBbWl280EMPOp7uxVj62mdDfa6P_vNZMi_JuQMyMf4lRnjkqA4X6aVY1wFZ2RUwgiEVCpiBxmniNs2XOmVfJnAKi7FMVu7-Hl4LTNO6Mk_uCUee7BuWnLRlqjkyXrdiCR';
+    TOKEN = 'BQC3pT5pL7tu-eTEct_9TWMe2dkmI7I9FObTEVGZg735yTw1e3a8b6tgAJB-bj_HLqJGb1KtdA3wb3l3G0varF6QnWfRRNjvttkB0OfxSeECFaZcSG82gpwyfIvkCS6R1nozmlbczP0hzfgXK9iL';
 
 function getSpotifyID(type, name) {
     let id = '';
