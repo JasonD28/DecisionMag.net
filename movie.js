@@ -1,4 +1,5 @@
 function getSite(id) {
+
     //alert(id);
     fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=9f81f98dda461876ca00dc09fc4226ac&language=en-US`, {
 	method: 'GET',
@@ -9,10 +10,12 @@ function getSite(id) {
 	{
             document.getElementById("website").setAttribute('href', reply.homepage);
             document.getElementById("poster").setAttribute('src', `http://image.tmdb.org/t/p/w200/${reply.poster_path}`);
+
 	}
     }).catch(error => console.error('Error: ', error));
 
 }
+
 
 function getGenre(genre) {
     fetch('https://api.themoviedb.org/3/genre/movie/list?api_key=9f81f98dda461876ca00dc09fc4226ac&language=en-US', {
@@ -82,3 +85,4 @@ document.getElementById('genreName').addEventListener("keyup", function(event) {
         document.getElementById('info').style.display = "block";
     }
   });
+
