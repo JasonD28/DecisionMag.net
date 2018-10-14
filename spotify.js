@@ -6,13 +6,13 @@ const clientID = "52adb50940ad424ea21b1f0f83216db5",
     apiURL = "https://accounts.spotify.com/api/token/",
     searchURL = "https://api.spotify.com/v1/search?",
     recURL = 'https://api.spotify.com/v1/recommendations?',
-    TOKEN = "BQAVKrDPSo-92pGHfQ9uEyxLnBaw0T-1KBqB-y2FuqIT6_VCPCVb6Vq3i3xys5HPLOfO9bElKYKqpGJKTtPzyYmHBo66yqyZU_r1vSftIuWxRCUm1aZLe5WPElb52ABPmV2Q7utCrkPxjYc4To9d";
+    TOKEN = "BQAmJK5r1tAMf5PYbfGGAoruCMTywjM2XX8aaX65KITxXgAWf0DxBg8fLGIdxOXhzDVl9XfPLA7aYbhn53evINqtU2AYXkzDo-U905OAyUnhPs0X25hf7P2lZ-xCwfmAu7kVm-zy5FeOJ6a9emBM";
 
 function getSpotifyID(type, name) {
     let id = '';
-
+    alert(`${type}:${name}`);
     if(type == "genre"){
-        id = type;
+        getRecommendation(type, name);
     } else {
         fetch(`${searchURL}q=${name}&type=${type}&limit=1`, {
             method: 'GET',
@@ -22,12 +22,14 @@ function getSpotifyID(type, name) {
             }
         }).then(response => response.json()).then(function (response) {
             if(response.artists.items[0].id){
+                alert(type);
                 id = response.artists.items[0].id;
                 getRecommendation(type, id);
             } else {
+                alert("Bye Irene");
                 console.error("Nothing found.")
             }
-        }).catch(error => console.error('Error:', error));
+        }).catch(error => alert(error));
     }
 
     
@@ -39,8 +41,10 @@ function getRecommendation(seedType, seedID){
     let seed = '';
 
     if(seedType == 'artist'){
+        alert("Irene is nice at times...")
         seed = 'seed_artists';
     }
+    
 
     console.log(seedID);
     fetch(`${recURL}limit=50&${seed}=${seedID}`, {
@@ -51,9 +55,9 @@ function getRecommendation(seedType, seedID){
         }
     }).then(response => response.json()).then(function (response) {
         if(response.tracks){
-            console.log(response.tracks);
+            alert('Bread');
             let rng = Math.floor(Math.random() * 50);
-            return response.tracks[rng].album.external_urls.spotify;
+            let teamLiquid = response.tracks[rng].album.external_urls.spotify;
         }
     }).catch(error => console.error('Error:', error));
 }
@@ -78,6 +82,8 @@ function getRecommendation(seedType, seedID){
 
 // getAccessToken();
 
+// getSpotifyID('artist', 'IU');
+
 document.addEventListener('DOMContentLoaded', function() {
 
     document.getElementById('selections').addEventListener('change', function(){
@@ -99,10 +105,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
                     // document.getElementById('musicName').value = '';
 
-                    document.getElementById('option1_1').style.display = "none";
-                    let recommend = getSpotifyID(title, name);
+                    // document.getElementById('option1_1').style.display = "none";
+                    // document.getElementById('options').style.display = "none";
+                    getSpotifyID(type, name);
 
-                    alert(recommend);
+                    // alert(recommend);
                 });
             })
         }
