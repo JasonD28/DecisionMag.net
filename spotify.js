@@ -6,13 +6,11 @@ const clientID = "52adb50940ad424ea21b1f0f83216db5",
     apiURL = "https://accounts.spotify.com/api/token/",
     searchURL = "https://api.spotify.com/v1/search?",
     recURL = 'https://api.spotify.com/v1/recommendations?',
-
     TOKEN = 'BQC3pT5pL7tu-eTEct_9TWMe2dkmI7I9FObTEVGZg735yTw1e3a8b6tgAJB-bj_HLqJGb1KtdA3wb3l3G0varF6QnWfRRNjvttkB0OfxSeECFaZcSG82gpwyfIvkCS6R1nozmlbczP0hzfgXK9iL';
-
 
 function getSpotifyID(type, name) {
     let id = '';
-    alert(`${type}:${name}`);
+
     if(type == "genre"){
         getRecommendation(`seed_${type}s`, name);
     } else {
@@ -24,14 +22,12 @@ function getSpotifyID(type, name) {
             }
         }).then(response => response.json()).then(function (response) {
             if(response.artists.items[0].id){
-                alert(type);
                 id = response.artists.items[0].id;
                 getRecommendation(`seed_${type}s`, id);
             } else {
-                alert("Bye Irene");
                 console.error("Nothing found.")
             }
-        }).catch(error => alert(error + 'ID'));
+        }).catch(error => console.error('Error:', error));
     }
 
     
@@ -39,7 +35,6 @@ function getSpotifyID(type, name) {
 }
 
 function getRecommendation(seedType, seedID){
-
     console.log(seedID);
     fetch(`${recURL}limit=50&${seedType}=${seedID}`, {
         method: 'GET',
@@ -56,9 +51,8 @@ function getRecommendation(seedType, seedID){
             document.getElementById('artistName').innerHTML = response.tracks[rng].album.artists[0].name;
             document.getElementById('albumTitle').innerHTML = response.tracks[rng].album.name;
             document.getElementById('musicLink').setAttribute('href', response.tracks[rng].album.external_urls.spotify);
-
         }
-    }).catch(error => alert(error + 'REC'));//console.error('Error:', error));
+    }).catch(error => console.error('Error:', error));
 }
 
 let type, name;
@@ -98,6 +92,5 @@ let type, name;
 
             document.getElementById('option1_1').style.display = "none";
             document.getElementById('finalMusic').style.display = "block";
-
         }
       });
