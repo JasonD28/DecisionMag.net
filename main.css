@@ -12,6 +12,7 @@ p{
 }
 #option1,
 #option1_1,
-#option2{
+#option2,
+#info{
     display: none;
 }
